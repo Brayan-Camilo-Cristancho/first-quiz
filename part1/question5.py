@@ -18,11 +18,7 @@
 # name text
 # vegetarian integer
 
-sql_create_favorite_foods = """
-
-Your SQL here.
-
-"""
+sql_create_favorite_foods = "CREATE TABLE favorite_foods (food_id INTEGER PRIMARY KEY, name TEXT, vegetarian INTEGER)"
 
 # Part 5.B:
 # Alter the animals and people tables by adding a new column to each called 'favorite_food_id'
@@ -30,16 +26,24 @@ Your SQL here.
 
 sql_alter_tables_with_favorite_food = """
 
-Your SQL here.
+ALTER TABLE animals ADD COLUMN favorite_food_id INTEGER;
+ALTER TABLE people ADD COLUMN favorite_food_id INTEGER;
 
+"""
+
+# script foreign key constraints but they are not identified by SQLite
+
+"""
+ALTER TABLE animals
+ADD CONSTRAINT fk_animals_fav_food
+FOREIGN KEY (favorite_food_id) REFERENCES favorite_foods(food_id);
+ALTER TABLE people
+ADD CONSTRAINT fk_people_fav_food
+FOREIGN KEY (favorite_food_id) REFERENCES favorite_foods(food_id);
 """
 
 # Part 5.C:
 # Write a query to select all pets that are vegetarian.
 # THe output should be a list of tuples in the format: (<pet name>, <food name>)
 
-sql_select_all_vegetarian_pets = """
-
-Your SQL here.
-
-"""
+sql_select_all_vegetarian_pets = " SELECT a.name, favorite_foods.name FROM favorite_foods INNER JOIN animals a ON favorite_foods.food_id = a.favorite_food_id WHERE favorite_foods.vegetarian = 1 "

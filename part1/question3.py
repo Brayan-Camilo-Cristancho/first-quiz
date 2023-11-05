@@ -26,8 +26,56 @@
 # formulas and their outputs in the test file, `question3_test.py`.
 
 # This function should return an oven instance!
+
+recipeBookFreeze = {}
+recipeBookBoil = {}
+recipeBookWait = {}
+
+def createRecipeBook(product,ingredients,temperature):
+    
+    try:
+      if not (
+      isinstance(product, str) and
+      isinstance(ingredients, list) and
+      all(isinstance(ingredient, str) for ingredient in ingredients) and
+      isinstance(temperature, int)
+      ):
+          raise TypeError("Error in input data types.")
+      
+      if(temperature < 0):
+          recipeBookFreeze[(tuple(ingredients)),temperature] = product.lower()
+      elif (temperature >= 100):
+          recipeBookBoil[(tuple(ingredients)),temperature] = product.lower()
+      else:
+          recipeBookWait[(tuple(ingredients)),temperature] = product.lower()  
+
+    except TypeError as e:
+        print(e)
+
+
+createRecipeBook("pizza",["cheese", "dough", "tomato"],150)
+createRecipeBook("snow",["water", "air"],-100)
+createRecipeBook("gold",["lead", "mercury"],5000)
+class MagicOven:
+    def __init__(self):
+        self.ingredients = []
+        self.product = ""
+
+    def add(self, item):
+        self.ingredients.append(item)
+    def freeze(self,temperature):
+        self.product = recipeBookFreeze.get((tuple(self.ingredients),temperature), "Unidentified new product")
+    def boil(self,temperature):
+        self.product = recipeBookBoil.get((tuple(self.ingredients),temperature),"Unidentified new product")
+    def wait(self,temperature):
+        self.product = recipeBookWait.get((tuple(self.ingredients),temperature), "Unidentified new product")
+    
+    def get_output(self):
+        return self.product
+        
 def make_oven():
-  None
+  oven1 = MagicOven()
+  return oven1
 
 def alchemy_combine(oven, ingredients, temperature):
   
@@ -35,10 +83,10 @@ def alchemy_combine(oven, ingredients, temperature):
     oven.add(item)
 
   if temperature < 0:
-    oven.freeze()
+    oven.freeze(temperature)
   elif temperature >= 100:
-    oven.boil()
+    oven.boil(temperature)
   else:
-    oven.wait()
+    oven.wait(temperature)
 
   return oven.get_output()

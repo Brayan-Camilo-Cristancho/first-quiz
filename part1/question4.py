@@ -22,27 +22,15 @@ import pets_db
 # Write SQL to select the pets that are owned by nobody.
 # The output should be a list of tuples in the format: (<pet name>, <species>, <age>)
 
-sql_pets_owned_by_nobody = """
-
-Your SQL here.
-
-"""
+sql_pets_owned_by_nobody = "SELECT animals.name, animals.species, animals.age FROM animals LEFT OUTER JOIN people_animals p_a ON animals.animal_id = p_a.pet_id WHERE p_a.owner_id IS NULL"
 
 # Part 4.B:
 # Write SQL to select how the number of pets are older than their owners. 
 # The output should be an integer.
 
-sql_pets_older_than_owner = """
-
-Your SQL here.
-
-"""
+sql_pets_older_than_owner = "SELECT COUNT(*) FROM people_animals INNER JOIN people p ON p.person_id = people_animals.owner_id INNER JOIN animals a ON a.animal_id = people_animals.pet_id WHERE p.age < a.age"
 
 # Part 4.C: BONUS CHALLENGE! 
 # Write SQL to select the pets that are owned by Bessie and nobody else.
 # The output should be a list of tuples in the format: (<person name>, <pet name>, <species>)
-sql_only_owned_by_bessie = """ 
-
-Your SQL here.
-
-"""
+sql_only_owned_by_bessie = "SELECT p.name,a.name,a.species FROM people_animals INNER JOIN people p ON p.person_id = people_animals.owner_id INNER JOIN animals a ON a.animal_id = people_animals.pet_id WHERE LOWER(p.name) = LOWER('BESSIE')"

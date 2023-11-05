@@ -13,23 +13,36 @@
 # need to be fixed. The test suite in `question1_test.py` will verify the output.
 # Read the test suite to know the values that these functions should return.
 
-def get_city_temperature(city):
-   if city == "Quito":
-      return 22
-   if city == "Sao Paulo":
-      return 17
-   if city == "San Francisco":
-      return 16
+class City:
+   def __init__(self,temperature,weather):
+      self.temperature = temperature
+      self.weather = weather
+   @property
+   def temperature(self):
+      return self._temperature
 
+   @temperature.setter
+   def temperature(self, value):
+      self._temperature = value
+
+   @property
+   def weather(self):
+      return self._weather
+
+   @weather.setter
+   def weather(self, value):
+      self._weather = value
+
+cities = {
+   "Quito" : City(22,"sunny"),
+   "Sao Paulo" : City(17,"cloudy"),
+   "New York" : City(14,"rainy")
+   }
+   
 def get_city_weather(city):
+   get_city = cities.get(city.title())
+   if get_city:
+      return f"{get_city.temperature} degrees and {get_city.weather}"
+   else:
+      return "City not found."
 
-  sky_condition = None
-
-  if city == "Sao Paulo":
-     sky_condition = "cloudy"
-  elif city == "New York":
-     sky_condition = "rainy"
-
-  temperature = get_city_temperature(city)
-
-  return str(temperature) + " degrees and " + sky_condition
